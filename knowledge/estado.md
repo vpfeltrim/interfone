@@ -31,8 +31,7 @@ Testes de bancada que fecham as dúvidas da decisão:
 Vídeo: libx264 por software, com o encoder parametrizável; hardware só como experimento com kernel
 próprio ([análise](/analises/codificacao-h264-no-h616.md)). O NVR aceita RTSP (usuário).
 
-Hardware em aberto: fechadura/portão (relé?), destino do AT3040 e o driver dele, alto-falante da
-porta (impedância), iluminação noturna, dissipador.
+**Hardware fechado** (2026-11-23). Sem fechadura; iluminação noturna adiada; campainhas na fase final.
 
 ## Bloqueado
 
@@ -40,4 +39,5 @@ Nada.
 
 ## Espera decisão
 
-Protocolo de áudio e controle entre porta, telefone e app; como o app recebe vídeo e áudio.
+Próxima frente: esquemas de ligação (`hardware/`) ou protocolo de áudio/controle entre porta,
+telefone e app (como o app recebe vídeo e áudio).

@@ -12,25 +12,21 @@ dono: process:memoria
 
 ## Frente corrente
 
-Memória montada ([decisão](/decisoes/2026-11-23-memoria-lastro-perfil-interfone.md)). Nenhum código
-nem desenho ainda.
+Arquitetura inicial decidida ([decisão](/decisoes/2026-11-23-arquitetura-inicial.md)): Orange Pi
+Zero 2 na porta (câmera USB, eletreto WA55A103 na placa de expansão, PAM8403, botão), ESP32 no
+telefone HDL (MAX9814, fone, gancho, toque), campainhas com D1 mini / S2 mini. Servidor próprio em
+Go: RTSP para o NVR, áudio e toque. Câmera: só MJPEG/YUY2 ([ficha](/integracoes/camera-usb-2mp.md)).
 
-Requisitos do usuário (2026-11-23):
-- duas unidades: **externa** (câmera, alto-falante, microfone, botão; carcaça HDL) e **interna**
-  (telefone HDL da cozinha, placa trocada, mantendo microfone e fone);
-- comunicação **sem fio, Wi-Fi**;
-- **app de PC e celular**: conversar com a unidade externa e ver a câmera;
-- vídeo disponível ao **NVR da casa** (Xiongmai, ver `~/projetos/nvrcap`);
-- opcional: **campainhas remotas** para avisar o toque.
-
-Hardware disponível: Orange Pi Zero 2 (1 GB), câmera USB, MAX9814 (microfone com AGC), buzzer
-piezo AT3040, cápsula de eletreto WA55A103, PAM8403 (amplificador), ESP32-WROOM, telefone HDL e
-peças da caixa externa HDL.
+Requisitos (usuário, 2026-11-23): Wi-Fi; app de PC e celular para conversar e ver a câmera; vídeo no
+NVR Xiongmai (ver `~/projetos/nvrcap`); campainhas remotas opcionais. Energia: por conta do usuário.
 
 ## Próximo passo
 
-Definir a arquitetura: o que roda em qual placa, protocolo de áudio/vídeo e de toque, e como o NVR
-recebe a câmera.
+Testes de bancada que fecham as dúvidas da decisão:
+1. microfone do H616 pela placa de expansão (`arecord -l` + gravação curta);
+2. formatos reais da câmera (`v4l2-ctl --list-formats-ext`) e custo do H.264 em software;
+3. protocolos que o NVR aceita ao adicionar canal (RTSP ou só ONVIF);
+4. impedância do fone do monofone (multímetro).
 
 ## Bloqueado
 
@@ -38,4 +34,4 @@ Nada.
 
 ## Espera decisão
 
-Arquitetura (acima).
+Protocolo de áudio e controle entre porta, telefone e app; como o app recebe vídeo e áudio.

@@ -1,6 +1,8 @@
 # Log do projeto
 
 ## 2026-11-23
+* **Correção**: captura ignora comandos do próprio lastro: o texto de um lastro log citando rpi-eeprom-update virou pendência falsa
+* **Decisão**: Pi 4 numa caixa atrás do muro e painel externo novo impresso em 3D; acesso remoto pelo túnel Cloudflare (só HTTP/WebSocket) — ver [troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)
 * **Atualização**: perfil de captura passa a registrar raspi-config nonint e rpi-eeprom-update -a (troca para o Raspberry Pi 4) — ver [troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)
 * **Decisão**: Raspberry Pi 4 (4 GB) no lugar da Orange Pi Zero 2, como único servidor do sistema; H.264 por hardware — ver [troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)
 * **Decisão**: hardware fechado: AT3040 no toque do telefone, alto-falante HDL 8 Ω 0,5 W na porta, sem fechadura, iluminação adiada, campainhas no fim — ver [arquitetura](/decisoes/2026-11-23-arquitetura-inicial.md)

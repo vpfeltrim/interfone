@@ -13,6 +13,8 @@ sources:
     resource: "Usuário em 2026-11-23: 'vamos substituir a orangepi por uma raspberry pi 4 de 4GB, assim teremos mais controle e tudo que irá gerenciar essa aplicação irá rodar nele, sem nenhum outro serviço em outros computadores'"
   - id: placa
     resource: /integracoes/raspberry-pi-4.md
+  - id: usuario-2
+    resource: "Usuário em 2026-11-23: o Pi fica numa caixa do lado de dentro do muro; do lado de fora, carcaça nova impressa em 3D com os componentes básicos; acesso externo pelo Cloudflare (IP do Pi configurado no túnel)"
 ---
 
 # Raspberry Pi 4 na porta
@@ -38,14 +40,26 @@ O usuário quer mais controle. Além disso:
 - Câmera, Ugreen US205, PAM8403, alto-falante e botão continuam.
 - O telefone (ESP32) e as campainhas não mudam.
 
+## Posição e acesso (usuário, 2026-11-23)
+
+- **Duas caixas:**
+  - **painel externo**, carcaça nova impressa em 3D, com câmera, microfone, alto-falante e botão;
+  - **caixa interna**, do lado de dentro do muro, com o Pi 4, a Ugreen, o PAM8403 e a ventoinha.
+  O cartão SD e as credenciais ficam fora do alcance da rua.
+- **Acesso de fora:** o Pi entra no túnel Cloudflare que já existe. O túnel é infraestrutura de rede,
+  não um serviço da aplicação: a aplicação continua toda no Pi.
+
 ## Consequências a resolver
 
-- **Tamanho:** 85 × 56 mm contra 53 × 60 mm da Zero 2. Conferir se cabe na carcaça HDL.
-- **Servidor no lado da rua:** quem abrir a caixa leva o cartão SD, com a senha do Wi-Fi e as
-  credenciais. Mitigar com parafuso de segurança, sem credencial do NVR guardada se não for preciso
-  e, se possível, o Pi do lado de dentro do muro.
-- **Sem serviço externo:** notificação e acesso fora da rede de casa não vêm prontos. Fora do Wi-Fi,
-  é preciso VPN ou túnel (que seria um serviço) ou aceitar que funciona só em casa.
+- **Cabos pelo muro:** USB da câmera (2.0, até 5 m sem repetidor; o cabo dela tem 50 cm), microfone
+  (cabo blindado até a Ugreen), alto-falante (par saindo do PAM8403, nenhum fio ao GND) e botão.
+  Falta a distância e a espessura do muro.
+- **O túnel só passa HTTP(S)/WebSocket.** RTSP e UDP (WebRTC) não atravessam. O app remoto recebe
+  vídeo e áudio por WebSocket/HTTPS. O RTSP fica só na rede local, para o NVR.
+- **Hostname público de uma câmera de porta:** proteger com Cloudflare Access e com a autenticação
+  do próprio servidor.
+- **Notificação no celular fora de casa** sem serviço de terceiros: o próprio Pi mantém o canal
+  (ntfy hospedado no Pi, ou app com conexão persistente). Decidir junto com o protocolo.
 
 ## Como desfazer
 

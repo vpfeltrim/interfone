@@ -94,6 +94,7 @@ captura:
     - '\.(FCStd1|FCBak|kicad_prl|lck)$|(^|/)~[^/]*\.lck$|-backups/'   # backup/lock do FreeCAD e do KiCad
     - '--version\b'
     - '--help\b'
+    - '^\s*(cd\s+\S+\s*&&\s*)?lastro\s+(log|consolidar|lint|indices|perfil|pendentes|ancoras)\b'   # comandos do próprio lastro: o texto do log pode citar um comando capturável
   ferramentas:                      # FreeCAD MCP que cria, altera ou roda código no modelo
     - 'mcp__freecad__(create_document|create_object|edit_object|delete_object|insert_part_from_library|execute_code|execute_code_async|execute_code_headless|reload_document)$'
 

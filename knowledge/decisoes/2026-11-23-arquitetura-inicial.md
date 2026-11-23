@@ -31,7 +31,7 @@ sources:
 
 | unidade | placa | periféricos |
 |---|---|---|
-| **Porta** (carcaça HDL) | **Raspberry Pi 4 (4 GB)** ([troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)) + dissipador e ventoinha | câmera USB; **placa de som USB Ugreen US205** com o eletreto WA55A103 na entrada de microfone e a saída → PAM8403 (1 canal) → **alto-falante original HDL, 8 Ω 0,5 W** (AL F57R32M805); botão |
+| **Porta** — painel externo impresso em 3D + caixa interna atrás do muro | **Raspberry Pi 4 (4 GB)** na caixa interna ([troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)) + dissipador e ventoinha | no painel: câmera USB, WA55A103, alto-falante, botão; na caixa: Ugreen US205, PAM8403. Ligação: **placa de som USB Ugreen US205** com o eletreto WA55A103 na entrada de microfone e a saída → PAM8403 (1 canal) → **alto-falante original HDL, 8 Ω 0,5 W** (AL F57R32M805); botão |
 | **Telefone** (HDL, cozinha) | ESP32-WROOM | MAX9814 com o eletreto do monofone; fone do monofone (DAC do ESP32 ou PCM5102, conforme a impedância); gancho; **AT3040 no toque**, com transistor |
 | **Campainhas remotas** | Wemos D1 mini (ESP8266) / S2 mini (ESP32-S2) | **fase final**; buzzers a comprar |
 

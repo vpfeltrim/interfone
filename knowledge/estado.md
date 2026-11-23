@@ -28,8 +28,11 @@ Testes de bancada que fecham as dúvidas da decisão:
 2. formatos reais da câmera (`v4l2-ctl --list-formats-ext`) e custo do H.264 em software (x264);
 3. impedância do fone do monofone (multímetro).
 
-Em pesquisa: codificação H.264 por hardware no H616. A imagem 6.1.31 só tem o Cedrus, que decodifica.
-O NVR aceita RTSP (usuário).
+Vídeo: libx264 por software, com o encoder parametrizável; hardware só como experimento com kernel
+próprio ([análise](/analises/codificacao-h264-no-h616.md)). O NVR aceita RTSP (usuário).
+
+Hardware em aberto: fechadura/portão (relé?), destino do AT3040 e o driver dele, alto-falante da
+porta (impedância), iluminação noturna, dissipador.
 
 ## Bloqueado
 

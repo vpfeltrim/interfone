@@ -1,6 +1,7 @@
 # Log do projeto
 
 ## 2026-11-23
+* **Descoberta**: H.264 no H616: nenhum kernel oficial codifica por hardware; usar libx264 e deixar h264_v4l2m2m (ports de 2026) como experimento — ver [análise](/analises/codificacao-h264-no-h616.md)
 * **Decisão**: microfone e alto-falante da porta pela Ugreen US205 do usuário; NVR aceita RTSP, sem ONVIF — ver [arquitetura](/decisoes/2026-11-23-arquitetura-inicial.md)
 * **Descoberta**: imagem Orange Pi 6.1.31 (a mesma da Zero 2): o motor de vídeo só tem o Cedrus, que decodifica; não há codificador por hardware e o x264 já vem — ver [Orange Pi Zero 2](/integracoes/orange-pi-zero-2.md)
 * **Descoberta**: manual da Orange Pi Zero 2: sem microfone (nem pela placa de expansão) e sem codec de vídeo no Linux; microfone da porta vai por placa de som USB — ver [Orange Pi Zero 2](/integracoes/orange-pi-zero-2.md)

@@ -13,7 +13,7 @@ dono: process:memoria
 ## Frente corrente
 
 Arquitetura inicial decidida ([decisão](/decisoes/2026-11-23-arquitetura-inicial.md)): Orange Pi
-Zero 2 na porta (câmera USB, placa de som USB com eletreto WA55A103 → PAM8403, botão), ESP32 no
+Zero 2 na porta (câmera USB, placa de som USB Ugreen US205 com eletreto WA55A103 → PAM8403, botão), ESP32 no
 telefone HDL (MAX9814, fone, gancho, toque), campainhas com D1 mini / S2 mini. Servidor próprio em
 Go: RTSP para o NVR, áudio e toque. Câmera só MJPEG/YUY2 ([ficha](/integracoes/camera-usb-2mp.md)); a placa não tem microfone nem codec
 de vídeo ([ficha](/integracoes/orange-pi-zero-2.md)).
@@ -24,10 +24,12 @@ NVR Xiongmai (ver `~/projetos/nvrcap`); campainhas remotas opcionais. Energia: p
 ## Próximo passo
 
 Testes de bancada que fecham as dúvidas da decisão:
-1. placa de som USB para a porta: escolher/comprar e testar com o WA55A103 (`arecord -l`);
-2. formatos reais da câmera (`v4l2-ctl --list-formats-ext`) e custo do H.264 em software;
-3. protocolos que o NVR aceita ao adicionar canal (RTSP ou só ONVIF);
-4. impedância do fone do monofone (multímetro).
+1. Ugreen US205 + WA55A103 na Orange Pi (`arecord -l`, gravação curta; medir a tensão no microfone);
+2. formatos reais da câmera (`v4l2-ctl --list-formats-ext`) e custo do H.264 em software (x264);
+3. impedância do fone do monofone (multímetro).
+
+Em pesquisa: codificação H.264 por hardware no H616. A imagem 6.1.31 só tem o Cedrus, que decodifica.
+O NVR aceita RTSP (usuário).
 
 ## Bloqueado
 

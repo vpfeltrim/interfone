@@ -1,6 +1,8 @@
 # Log do projeto
 
 ## 2026-11-23
+* **Decisão**: microfone e alto-falante da porta pela Ugreen US205 do usuário; NVR aceita RTSP, sem ONVIF — ver [arquitetura](/decisoes/2026-11-23-arquitetura-inicial.md)
+* **Descoberta**: imagem Orange Pi 6.1.31 (a mesma da Zero 2): o motor de vídeo só tem o Cedrus, que decodifica; não há codificador por hardware e o x264 já vem — ver [Orange Pi Zero 2](/integracoes/orange-pi-zero-2.md)
 * **Descoberta**: manual da Orange Pi Zero 2: sem microfone (nem pela placa de expansão) e sem codec de vídeo no Linux; microfone da porta vai por placa de som USB — ver [Orange Pi Zero 2](/integracoes/orange-pi-zero-2.md)
 * **Descoberta**: câmera USB só entrega MJPEG/YUY2: H.264 para o NVR será codificado em software — ver [câmera](/integracoes/camera-usb-2mp.md)
 * **Decisão**: arquitetura inicial: Orange Pi na porta, ESP32 no telefone, campainhas D1/S2 mini, servidor RTSP próprio em Go — ver [decisão](/decisoes/2026-11-23-arquitetura-inicial.md)

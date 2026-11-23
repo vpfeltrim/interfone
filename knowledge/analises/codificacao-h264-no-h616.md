@@ -4,7 +4,8 @@ title: Codificação H.264 no H616 — software agora, hardware como experimento
 description: Situação em 2026-11 da codificação H.264 por hardware no H616/H618 (nenhum kernel oficial expõe; três ports comunitários de 2026 fora da árvore) e a recomendação de usar libx264 por software com o encoder parametrizável no Go.
 dono: process:memoria
 tags: [video, h264, h616, cedrus, unidade-externa]
-status: draft
+status: deprecated
+mem_substituido_por: /integracoes/raspberry-pi-4.md
 generated:
   by: claude-code/claude-opus-5-5
   at: 2026-11-23T15:00:00-03:00

@@ -12,26 +12,19 @@ dono: process:memoria
 
 ## Frente corrente
 
-Arquitetura inicial decidida ([decisão](/decisoes/2026-11-23-arquitetura-inicial.md)): Orange Pi
-Zero 2 na porta (câmera USB, placa de som USB Ugreen US205 com eletreto WA55A103 → PAM8403, botão), ESP32 no
-telefone HDL (MAX9814, fone, gancho, toque), campainhas com D1 mini / S2 mini. Servidor próprio em
-Go: RTSP para o NVR, áudio e toque. Câmera só MJPEG/YUY2 ([ficha](/integracoes/camera-usb-2mp.md)); a placa não tem microfone nem codec
-de vídeo ([ficha](/integracoes/orange-pi-zero-2.md)).
-
-Requisitos (usuário, 2026-11-23): Wi-Fi; app de PC e celular para conversar e ver a câmera; vídeo no
-NVR Xiongmai (ver `~/projetos/nvrcap`); campainhas remotas opcionais. Energia: por conta do usuário.
+**Hardware fechado** ([arquitetura](/decisoes/2026-11-23-arquitetura-inicial.md)). **Raspberry Pi 4
+(4 GB)** na porta, no lugar da Orange Pi ([troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)),
+como único servidor: câmera USB (só MJPEG/YUY2, [ficha](/integracoes/camera-usb-2mp.md)) → H.264
+por hardware → RTSP para o NVR; Ugreen US205 com eletreto WA55A103 → PAM8403 → alto-falante HDL
+8 Ω 0,5 W; botão. ESP32 no telefone HDL (MAX9814, fone, gancho, AT3040 no toque). Campainhas
+(D1/S2 mini) na fase final. Sem fechadura; iluminação noturna adiada. Software próprio em Go.
 
 ## Próximo passo
 
-Testes de bancada que fecham as dúvidas da decisão:
-1. Ugreen US205 + WA55A103 na Orange Pi (`arecord -l`, gravação curta; medir a tensão no microfone);
-2. formatos reais da câmera (`v4l2-ctl --list-formats-ext`) e custo do H.264 em software (x264);
-3. impedância do fone do monofone (multímetro).
-
-Vídeo: libx264 por software, com o encoder parametrizável; hardware só como experimento com kernel
-próprio ([análise](/analises/codificacao-h264-no-h616.md)). O NVR aceita RTSP (usuário).
-
-**Hardware fechado** (2026-11-23). Sem fechadura; iluminação noturna adiada; campainhas na fase final.
+1. Confirmar se o Pi 4 (85 × 56 mm) cabe na carcaça HDL da porta.
+2. Bancada: Ugreen + WA55A103 (`arecord -l`, tensão no microfone); câmera (`v4l2-ctl
+   --list-formats-ext`) → `h264_v4l2m2m`; impedância do fone do monofone.
+3. Depois: esquemas de ligação (`hardware/`) e protocolo porta ↔ telefone ↔ app.
 
 ## Bloqueado
 
@@ -39,5 +32,4 @@ Nada.
 
 ## Espera decisão
 
-Próxima frente: esquemas de ligação (`hardware/`) ou protocolo de áudio/controle entre porta,
-telefone e app (como o app recebe vídeo e áudio).
+Acesso fora de casa e notificação no celular sem serviço externo: só na rede local, ou VPN/túnel?

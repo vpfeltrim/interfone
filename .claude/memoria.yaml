@@ -1,6 +1,6 @@
 # Perfil de memória do INTERFONE — lido pelo lastro (plugin lastro) e pelos hooks.
 # Base: `lastro init --perfil codigo`, adaptado em 2026-11-23 para um projeto que mistura firmware
-# embarcado (Orange Pi Zero 2, ESP32), software de PC/celular e desenho de peças (eletrônica e mecânica).
+# embarcado (Raspberry Pi 4, ESP32), software de PC/celular e desenho de peças (eletrônica e mecânica).
 # Decisão: /decisoes/2026-11-23-memoria-lastro-perfil-interfone.md
 # O bundle segue o OKF v0.2 (SPEC.md de GoogleCloudPlatform/open-knowledge-format, commit ad30107).
 # Mudar tipo, campo ou regra aqui é mudança de formato: registre uma Decisao antes.
@@ -60,6 +60,8 @@ captura:
     - '\bssh\b.*\b(sudo|systemctl|rm|mv|tee|chmod|chown|sed\s+-i|apt|reboot|amixer|alsactl|nmcli)\b'
     - '\bdd\b.*\bof=/dev/'                              # imagem no SD do Orange Pi
     - '\b(armbian-config|orangepi-config)\b'
+    - '\braspi-config\s+nonint\s+do_'                 # configuração não interativa do Raspberry Pi
+    - '\brpi-eeprom-(update\s+-a|config\s+(-a|--apply|-e|--edit))\b'
     - '\bnmcli\s+(con|connection|dev|device)\s+(add|modify|delete|up|down|wifi\s+connect)\b'
     - '\besptool(\.py)?\b.*\b(write[-_]flash|erase[-_]flash|erase[-_]region|write[-_]mem|burn[-_]efuse)\b'
     - '\bespefuse(\.py)?\b.*\bburn'

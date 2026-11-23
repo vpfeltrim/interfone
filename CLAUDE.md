@@ -8,7 +8,7 @@ PC e celular, vídeo entregue ao NVR da casa e, opcionalmente, campainhas remota
 
 | pasta | conteúdo |
 |---|---|
-| `firmware/` | código das placas (Orange Pi Zero 2, ESP32) — uma subpasta por unidade |
+| `firmware/` | código das placas (Raspberry Pi 4 na porta, ESP32 no telefone e nas campainhas) — uma subpasta por unidade |
 | `software/` | app de PC e celular, serviços |
 | `hardware/` | esquemas de ligação, pinagem, placas (KiCad) |
 | `mecanica/` | desenhos de suportes e adaptações da carcaça (FreeCAD, STL) |

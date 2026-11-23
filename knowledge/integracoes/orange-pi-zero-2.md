@@ -4,7 +4,8 @@ title: Orange Pi Zero 2 (H616) — o que a placa faz e o que não faz
 description: Limites da Orange Pi Zero 2 que moldam a unidade externa, segundo o manual oficial — sem entrada de microfone (nem pela placa de expansão), sem codec de vídeo por hardware no Linux, Wi-Fi 802.11ac, 3 USB 2.0.
 dono: process:memoria
 tags: [orange-pi, h616, unidade-externa, audio, video]
-status: draft
+status: deprecated
+mem_substituido_por: /integracoes/raspberry-pi-4.md
 generated:
   by: claude-code/claude-opus-5-5
   at: 2026-11-23T14:00:00-03:00

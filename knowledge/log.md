@@ -1,6 +1,8 @@
 # Log do projeto
 
 ## 2026-11-23
+* **Atualização**: perfil de captura passa a registrar raspi-config nonint e rpi-eeprom-update -a (troca para o Raspberry Pi 4) — ver [troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)
+* **Decisão**: Raspberry Pi 4 (4 GB) no lugar da Orange Pi Zero 2, como único servidor do sistema; H.264 por hardware — ver [troca](/decisoes/2026-11-23-raspberry-pi-4-na-porta.md)
 * **Decisão**: hardware fechado: AT3040 no toque do telefone, alto-falante HDL 8 Ω 0,5 W na porta, sem fechadura, iluminação adiada, campainhas no fim — ver [arquitetura](/decisoes/2026-11-23-arquitetura-inicial.md)
 * **Descoberta**: H.264 no H616: nenhum kernel oficial codifica por hardware; usar libx264 e deixar h264_v4l2m2m (ports de 2026) como experimento — ver [análise](/analises/codificacao-h264-no-h616.md)
 * **Decisão**: microfone e alto-falante da porta pela Ugreen US205 do usuário; NVR aceita RTSP, sem ONVIF — ver [arquitetura](/decisoes/2026-11-23-arquitetura-inicial.md)

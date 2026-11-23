@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "lastro": {
+      "source": {
+        "source": "directory",
+        "path": "/home/vitware/lastro"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "lastro@lastro": true
+  }
+}

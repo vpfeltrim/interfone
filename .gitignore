@@ -1,0 +1,16 @@
+# lastro: captura bruta, local
+.claude/memoria/pendente.jsonl
+.claude/memoria/diario/
+.claude/memoria/ancoras-avisadas.json
+.claude/memoria/retrato.json
+.claude/settings.local.json
+# credenciais (Wi-Fi, NVR, tokens) — lidas pelo build, nunca versionadas
+.env
+# saída de build e backups das ferramentas
+.pio/
+build/
+managed_components/
+*.FCBak
+*.FCStd1
+*-backups/
+*.kicad_prl

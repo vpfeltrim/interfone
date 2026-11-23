@@ -1,0 +1,117 @@
+# Perfil de memória do INTERFONE — lido pelo lastro (plugin lastro) e pelos hooks.
+# Base: `lastro init --perfil codigo`, adaptado em 2026-11-23 para um projeto que mistura firmware
+# embarcado (Orange Pi Zero 2, ESP32), software de PC/celular e desenho de peças (eletrônica e mecânica).
+# Decisão: /decisoes/2026-11-23-memoria-lastro-perfil-interfone.md
+# O bundle segue o OKF v0.2 (SPEC.md de GoogleCloudPlatform/open-knowledge-format, commit ad30107).
+# Mudar tipo, campo ou regra aqui é mudança de formato: registre uma Decisao antes.
+#
+# Diferenças em relação ao perfil de código:
+#   - tipo `Peca` (desenho de hardware: chicote, placa, suporte impresso, adaptação da carcaça HDL),
+#     ancorado por mem_codigo nos arquivos de desenho → o lint avisa quando o desenho anda sem a ficha;
+#   - escopo `bancada`: gravar firmware ou mexer numa placa de teste — fora do git, mas desfeito
+#     regravando; não exige Decisao. `mudanca` fica para o que está instalado na casa;
+#   - captura de gravação de firmware (esptool, idf.py, pio, arduino-cli, mpremote), cartão SD e
+#     ferramentas do FreeCAD que alteram modelo.
+okf_version: "0.2"
+okf_spec_commit: ad30107
+bundle: knowledge
+prefixo: mem_                       # campos que o OKF não define levam este prefixo
+
+revisores: [human:vitware]          # únicos que podem carimbar `verified`
+donos: [human:vitware, process:memoria]
+campos_base: [type, title, description, dono]
+
+tipos:
+  Atividade:  {pasta: atividades, titulo: Atividades, exige: [mem_status, mem_escopo], uso: "trabalho a fazer, fazendo ou feito — o estado mora no arquivo"}
+  Modulo:     {pasta: modulos,    titulo: Módulos,    exige: [mem_codigo], uso: "parte do software ou firmware (unidade externa, telefone interno, campainha, app): responsabilidade, interface, invariantes, como testar — ancorado por mem_codigo"}
+  Peca:       {pasta: pecas,      titulo: Peças,      exige: [sources, mem_codigo], uso: "peça física desenhada ou adaptada (esquema de ligação, placa, chicote, suporte impresso, carcaça HDL): função, medidas de origem, pinagem, montagem — ancorada nos arquivos de desenho por mem_codigo"}
+  Integracao: {pasta: integracoes, titulo: Integrações, exige: [sources, stale_after], uso: "contrato externo que muda sem avisar: placa (Orange Pi Zero 2, ESP32), módulo (MAX9814, PAM8403, câmera USB), biblioteca, protocolo (RTSP, ONVIF, SIP, MQTT) e o NVR — versão, limites, pinagem, armadilhas"}
+  Componente: {pasta: ambiente,   titulo: Ambiente,   exige: [sources, stale_after], uso: "peça fora do repositório e sua configuração vigente: placas montadas, rede Wi-Fi, NVR da casa, PC e celular, ferramentas"}
+  Baseline:   {pasta: baselines,  titulo: Baselines,  exige: [sources, stale_after, mem_janela], uso: "métrica medida numa janela: latência de áudio/vídeo, fps, consumo, alcance Wi-Fi, tempo de toque"}
+  Analise:    {pasta: analises,   titulo: Análises,   exige: [sources], uso: "conclusão tirada de dados, testes ou comparação de alternativas"}
+  Runbook:    {pasta: runbooks,   titulo: Runbooks,   uso: "como fazer algo, passo a passo, repetível (gravar firmware, preparar o SD, montar, instalar, release)"}
+  Resolucao:  {pasta: resolucoes, titulo: Resoluções, uso: "problema que aconteceu: sintoma, causa, solução"}
+  Decisao:    {pasta: decisoes,   titulo: Decisões,   nome_com_data: true, uso: "o que foi decidido ou autorizado, quando e por quê (ADR)"}
+  Estado:     {arquivo: estado.md, uso: "onde o projeto está agora — curto, importado pelo CLAUDE.md"}
+
+atividade:
+  escopos:
+    leitura: "só lê, investiga ou mede"
+    codigo: "altera só o repositório (código, desenho, documentação) — o git desfaz"
+    bancada: "grava firmware ou configura placa de teste na bancada — fora do git, mas desfeito regravando"
+    mudanca: "altera o que está instalado na casa: unidade externa ou telefone montados, NVR, rede, roteador"
+  exigem_autorizacao: [mudanca]     # só chegam a fazendo/concluido com mem_autorizacao → Decisao
+
+estado: {arquivo: estado.md, max_linhas: 60, max_bytes: 8000}
+log:
+  max_linha: 400
+  rotulos: [Criação, Atualização, Descoberta, Decisão, Mudança no código, Desenho, Correção, Medição, Dependência, Gravação, Montagem, Release, Deploy, Mudança no ambiente, Conclusão, Remoção, Rotação]
+
+# Ações capturadas pelo hook PostToolUse e cobradas no fim do turno.
+captura:
+  bash:                             # comandos que mudam algo fora do repositório
+    - '\b(apt|apt-get|dnf|pacman)\s+(install|remove|purge)\b'
+    - '\bsudo\s+pip3?\s+install\b|\bpip3?\s+install\b.*(--user|--break-system-packages)'
+    - '\bpipx\s+install\b'
+    - '\bnpm\s+(i|install)\s+(-g|--global)\b'
+    - '\bcargo\s+install\b'
+    - '\b(systemctl|service)\s+\S*\s*(restart|stop|start|reload|enable|disable)\b'
+    - '\b(scp|rsync)\b.*\s[\w.-]+(@[\w.-]+)?:\S*\s*$'   # destino remoto (envio), não origem
+    - '\bssh\b.*\b(sudo|systemctl|rm|mv|tee|chmod|chown|sed\s+-i|apt|reboot|amixer|alsactl|nmcli)\b'
+    - '\bdd\b.*\bof=/dev/'                              # imagem no SD do Orange Pi
+    - '\b(armbian-config|orangepi-config)\b'
+    - '\bnmcli\s+(con|connection|dev|device)\s+(add|modify|delete|up|down|wifi\s+connect)\b'
+    - '\besptool(\.py)?\b.*\b(write[-_]flash|erase[-_]flash|erase[-_]region|write[-_]mem|burn[-_]efuse)\b'
+    - '\bespefuse(\.py)?\b.*\bburn'
+    - '\bidf\.py\b.*\b(flash|erase[-_]flash|erase[-_]otadata|app-flash|encrypted-flash)\b'
+    - '\b(pio|platformio)\s+run\b.*(-t|--target)\s*(upload|uploadfs|erase|program)\b'
+    - '\barduino-cli\s+(upload|burn-bootloader)\b'
+    - '\bmpremote\b.*\b(cp|rm|rmdir|mkdir|mip\s+install)\b'
+    - '\bgit\s+push\b.*(\s-f\b|--force)'
+    - '\bgit\s+tag\s+(-[asd]\s|[^-\s])'                 # cria/apaga tag; -l e --list são leitura
+    - '\bgh\s+release\s+(create|delete|edit)\b'
+    - '\bcurl\b.*(-X\s*|--request\s+)(PUT|POST|DELETE|PATCH)\b'   # API do NVR/câmera com escrita
+    - '\b(freecadcmd|FreeCADCmd)\b'
+  # Regex do caminho relativo: edição que merece registro. Modo estrito: código-fonte e desenhos
+  # também contam; testes ficam em `ignorar`.
+  arquivos:
+    - '(^|/)(pyproject\.toml|setup\.cfg|setup\.py|requirements[^/]*\.txt|Pipfile|poetry\.lock)$'
+    - '(^|/)(package\.json|Cargo\.toml|go\.mod|CMakeLists\.txt|meson\.build|Makefile|pubspec\.yaml)$'
+    - '(^|/)(platformio\.ini|sdkconfig(\.defaults)?|partitions[^/]*\.csv|idf_component\.yml)$'
+    - '(^|/)(Dockerfile|docker-compose[^/]*\.ya?ml|compose\.ya?ml)$'
+    - '^\.github/workflows/'
+    - '\.(service|timer|desktop|rules)$'
+    - '^(deploy|packaging|dist-config)/'
+    - '^(firmware|software|scripts)/'
+    - '^(hardware|mecanica)/'
+  # Por estado: o início do turno retrata o repositório e o fim compara (pega sed, heredoc, gerador).
+  estado: true
+  ignorar:                          # regex sobre o comando ou o caminho: parece escrita, mas não merece registro
+    - '(^|/)tests?/|(^|/)test_[^/]*$|_test\.[a-z]+$'    # teste novo ou ajustado não cobra memória
+    - '(^|/)(\.pio|build|managed_components)/'           # saída de build
+    - '\.(FCStd1|FCBak|kicad_prl|lck)$|(^|/)~[^/]*\.lck$|-backups/'   # backup/lock do FreeCAD e do KiCad
+    - '--version\b'
+    - '--help\b'
+  ferramentas:                      # FreeCAD MCP que cria, altera ou roda código no modelo
+    - 'mcp__freecad__(create_document|create_object|edit_object|delete_object|insert_part_from_library|execute_code|execute_code_async|execute_code_headless|reload_document)$'
+
+briefing: {git_commits: 5}          # ramo, código sem commit e os N últimos commits no início da sessão
+ancoras: {sources: []}              # ancora-se por mem_codigo; sources fica só para proveniência
+stop: {exigir_commit: false}
+
+# Commit automático da MEMÓRIA no fim de cada turno: só com o lint limpo, só destes caminhos (o código
+# staged fica fora do commit), e recusado se houver credencial. A mensagem vem das linhas novas do log.
+git:
+  commit_automatico: true
+  push: true
+  caminhos: [knowledge, CLAUDE.md, .gitignore, .claude/memoria.yaml, .claude/settings.json, .claude/rules]
+
+# Arquivos com credenciais (fora do git): senha do Wi-Fi, do NVR, tokens — um .env só, KEY=VALOR.
+# O agente não o lê nem referencia, e qualquer valor secreto dele que aparecer numa saída é removido
+# antes do modelo. Firmware/app NÃO guardam credencial em fonte: o build gera o header a partir do
+# .env numa pasta ignorada. Não use glob '**' aqui: o lastro não recursa, e o trecho literal do
+# padrão vira agulha (um '.../interfone/**' marcaria o projeto inteiro como segredo).
+segredos:
+  arquivos: ['/home/vitware/projetos/interfone/.env']
+  min_tamanho: 8                    # valores menores não são redigidos (evita trocar trechos comuns)
+modulos: []                         # opcional: [certificados]

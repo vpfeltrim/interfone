@@ -15,6 +15,8 @@ sources:
     resource: "Foto do monofone HDL aberto, 2026-11-23: cápsula receptora (fio vermelho/azul) no topo, eletreto pequeno embaixo, cordão preto"
   - id: camera
     resource: /integracoes/camera-usb-2mp.md
+  - id: placa
+    resource: /integracoes/orange-pi-zero-2.md
 ---
 
 # Arquitetura inicial
@@ -23,7 +25,7 @@ sources:
 
 | unidade | placa | periféricos |
 |---|---|---|
-| **Porta** (carcaça HDL) | Orange Pi Zero 2 + placa de expansão de 13 pinos | câmera USB; eletreto WA55A103 no lugar do microfone da placa de expansão; LINE OUT → PAM8403 → alto-falante; botão |
+| **Porta** (carcaça HDL) | Orange Pi Zero 2 + placa de expansão de 13 pinos (USB extras) | câmera USB; **placa de som USB** com o eletreto WA55A103 na entrada de microfone e a saída → PAM8403 → alto-falante; botão |
 | **Telefone** (HDL, cozinha) | ESP32-WROOM | MAX9814 (microfone); fone do monofone; PCM5102 se o fone precisar; gancho; toque |
 | **Campainhas remotas** | Wemos D1 mini (ESP8266) / S2 mini (ESP32-S2) | buzzer (AT3040 disponível) |
 
@@ -40,13 +42,14 @@ disponíveis para as campainhas.
 
 ## Em aberto (confirmar antes de fechar o desenho)
 
-1. **Entrada de microfone do H616.** Há relatos de que o H618, da mesma família, não tem entrada de
-   microfone no hardware, e o patch de áudio da Zero2 no kernel principal não foi conferido. Teste na
-   placa: `arecord -l` e uma gravação curta. Se falhar, a alternativa é uma placa de som USB.
+1. ~~Entrada de microfone do H616~~ — **resolvido pelo manual**: a Zero 2 não tem microfone, nem
+   pela placa de expansão ([ficha](/integracoes/orange-pi-zero-2.md)). O microfone da porta vai por
+   placa de som USB (falta escolher/comprar).
 2. **Eco na porta.** Trocar a cápsula melhora a captação, mas não impede o alto-falante de entrar no
    microfone. Plano: isolar o microfone mecanicamente e, se não bastar, cancelar o eco no Go (speexdsp
    via cgo) ou baixar o microfone enquanto o telefone fala.
-3. **H.264 para o NVR.** A câmera só entrega MJPEG/YUY2, então o Orange Pi codifica em software.
+3. **H.264 para o NVR.** A câmera só entrega MJPEG/YUY2 e a placa não tem codec de vídeo no Linux
+   (manual: "Video codec: NO"), então o Orange Pi codifica em software.
    Validar resolução, fps e temperatura dentro da caixa.
 4. **Protocolo de canal do NVR Xiongmai** para câmera de terceiros: RTSP direto ou só ONVIF. Conferir
    no menu de adicionar canal. A ficha do NVR está em `~/projetos/nvrcap/knowledge/ambiente/nvr.md`.
